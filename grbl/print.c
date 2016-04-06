@@ -112,6 +112,25 @@ void print_uint32_base10(uint32_t n)
     serial_write('0' + buf[i-1]);
 }
 
+void ser1_print_uint32_base10(uint32_t n)
+{ 
+  if (n == 0) {
+    serial_write('0');
+    return;
+  } 
+
+  unsigned char buf[10]; 
+  uint8_t i = 0;  
+  
+  while (n > 0) {
+    buf[i++] = n % 10;
+    n /= 10;
+  }
+    
+  for (; i > 0; i--)
+    serial1_write('0' + buf[i-1]);
+}
+
 
 void printInteger(long n)
 {

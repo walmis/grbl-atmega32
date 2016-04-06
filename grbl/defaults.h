@@ -88,4 +88,8 @@
   #include "defaults/defaults_simulator.h"
 #endif
 
+#ifdef DEFAULTS_CYCLONE_2_1
+	#include "defaults/defaults_cyclone2.h"
+#endif
+
 #endif

@@ -23,14 +23,16 @@
 
 void system_init() 
 {
-  CONTROL_DDR &= ~(CONTROL_MASK); // Configure as input pins
-  #ifdef DISABLE_CONTROL_PIN_PULL_UP
-    CONTROL_PORT &= ~(CONTROL_MASK); // Normal low operation. Requires external pull-down.
-  #else
-    CONTROL_PORT |= CONTROL_MASK;   // Enable internal pull-up resistors. Normal high operation.
-  #endif
-  CONTROL_PCMSK |= CONTROL_MASK;  // Enable specific pins of the Pin Change Interrupt
-  PCICR |= (1 << CONTROL_INT);   // Enable Pin Change Interrupt
+
+  //CONTROL_DDR &= ~(CONTROL_MASK); // Configure as input pins
+ // #ifdef DISABLE_CONTROL_PIN_PULL_UP
+  //  CONTROL_PORT &= ~(CONTROL_MASK); // Normal low operation. Requires external pull-down.
+  //#else
+  //  CONTROL_PORT |= CONTROL_MASK;   // Enable internal pull-up resistors. Normal high operation.
+ // #endif
+  //CONTROL_PCMSK |= CONTROL_MASK;  // Enable specific pins of the Pin Change Interrupt
+  //PCICR |= (1 << CONTROL_INT);   // Enable Pin Change Interrupt
+
 }
 
 
@@ -40,6 +42,7 @@ void system_init()
 // directly from the incoming serial data stream.
 ISR(CONTROL_INT_vect) 
 {
+/*
   uint8_t pin = (CONTROL_PIN & CONTROL_MASK);
   #ifndef INVERT_ALL_CONTROL_PINS
     pin ^= CONTROL_INVERT_MASK;
@@ -59,6 +62,7 @@ ISR(CONTROL_INT_vect)
     #endif
     } 
   }
+  */
 }
 
 

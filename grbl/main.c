@@ -30,6 +30,7 @@ int main(void)
 {
   // Initialize system upon power-up.
   serial_init();   // Setup serial baud rate and interrupts
+  serial1_init();
   settings_init(); // Load Grbl settings from EEPROM
   stepper_init();  // Configure stepper pins and interrupt timers
   system_init();   // Configure pinout pins and pin-change interrupt
@@ -63,6 +64,8 @@ int main(void)
   
     // Reset Grbl primary systems.
     serial_reset_read_buffer(); // Clear serial read buffer
+    serial1_reset_read_buffer(); // Clear serial read buffer
+    
     gc_init(); // Set g-code parser to default state
     spindle_init();
     coolant_init();

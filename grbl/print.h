@@ -30,6 +30,7 @@ void printPgmString(const char *s);
 void printInteger(long n);
 
 void print_uint32_base10(uint32_t n);
+void ser1_print_uint32_base10(uint32_t n);
 
 // Prints uint8 variable with base and number of desired digits.
 void print_unsigned_int8(uint8_t n, uint8_t base, uint8_t digits); 

@@ -20,7 +20,7 @@
 */
   
 #include "grbl.h"
-
+#include "fastio.h"
 
 // Homing axis search distance multiplier. Computed by this value times the cycle travel.
 #ifndef HOMING_AXIS_SEARCH_SCALAR
@@ -30,8 +30,11 @@
   #define HOMING_AXIS_LOCATE_SCALAR  5.0 // Must be > 1 to ensure limit switch is cleared.
 #endif
 
+
+
 void limits_init() 
 {
+/*
   LIMIT_DDR &= ~(LIMIT_MASK); // Set as input pins
 
   #ifdef DISABLE_LIMIT_PIN_PULL_UP
@@ -52,14 +55,22 @@ void limits_init()
     WDTCSR |= (1<<WDCE) | (1<<WDE);
     WDTCSR = (1<<WDP0); // Set time-out at ~32msec.
   #endif
+  */
+  
+  SET_INPUT(XLIM_PIN);
+  SET_INPUT(YLIM_PIN);
+  SET_INPUT(ZLIM_PIN);
+  WRITE(XLIM_PIN,1);
+  WRITE(YLIM_PIN,1);
+  WRITE(ZLIM_PIN,1);
 }
 
 
 // Disables hard limits.
 void limits_disable()
 {
-  LIMIT_PCMSK &= ~LIMIT_MASK;  // Disable specific pins of the Pin Change Interrupt
-  PCICR &= ~(1 << LIMIT_INT);  // Disable Pin Change Interrupt
+  //LIMIT_PCMSK &= ~LIMIT_MASK;  // Disable specific pins of the Pin Change Interrupt
+  //PCICR &= ~(1 << LIMIT_INT);  // Disable Pin Change Interrupt
 }
 
 
@@ -69,15 +80,15 @@ void limits_disable()
 uint8_t limits_get_state()
 {
   uint8_t limit_state = 0;
-  uint8_t pin = (LIMIT_PIN & LIMIT_MASK);
+  uint8_t pin = ((READ(XLIM_PIN)==1)<<X_LIMIT_BIT) | ((READ(YLIM_PIN)==1)<<Y_LIMIT_BIT) | ((READ(ZLIM_PIN)==1)<<Z_LIMIT_BIT);
   if (bit_isfalse(settings.flags,BITFLAG_INVERT_LIMIT_PINS)) { pin ^= LIMIT_MASK; }
-  if (pin) {  
+  /*if (pin) {  
 	uint8_t idx;
 	for (idx=0; idx<N_AXIS; idx++) {
 	  if (pin & get_limit_pin_mask(idx)) { limit_state |= (1 << idx); }
 	}
-  }
-  return(limit_state);
+  }*/
+  return pin;
 }
 
 
@@ -93,7 +104,7 @@ uint8_t limits_get_state()
 // special pinout for an e-stop, but it is generally recommended to just directly connect
 // your e-stop switch to the Arduino reset pin, since it is the most correct way to do this.
 #ifndef ENABLE_SOFTWARE_DEBOUNCE
-  ISR(LIMIT_INT_vect) // DEFAULT: Limit pin change interrupt process. 
+  /*ISR(LIMIT_INT_vect) // DEFAULT: Limit pin change interrupt process. 
   {
     // Ignore limit switches if already in an alarm state or in-process of executing an alarm.
     // When in the alarm state, Grbl should have been reset or will force a reset, so any pending 
@@ -114,7 +125,7 @@ uint8_t limits_get_state()
         #endif
       }
     }
-  }  
+  }  */
 #else // OPTIONAL: Software debounce limit pin routine.
   // Upon limit pin change, enable watchdog timer to create a short delay. 
   ISR(LIMIT_INT_vect) { if (!(WDTCSR & (1<<WDIE))) { WDTCSR |= (1<<WDIE); } }
