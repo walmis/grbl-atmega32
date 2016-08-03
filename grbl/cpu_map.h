@@ -41,6 +41,9 @@
 #include "cpu_map/cpu_map_sanguinololu.h"
 #endif
 
+#ifdef CPU_MAP_ATmega32_Sanguinololu
+#include "cpu_map/cpu_map_sanguinololu_m32.h"
+#endif
 /* 
 #ifdef CPU_MAP_CUSTOM_PROC
   // For a custom pin map or different processor, copy and edit one of the available cpu
