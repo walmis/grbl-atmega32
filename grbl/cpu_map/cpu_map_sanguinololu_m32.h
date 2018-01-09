@@ -115,6 +115,7 @@
 #define SPINDLE_DIRECTION_PIN   0  // Extruder direction pin
 #define COOLANT_FLOOD_PIN       13 // Hotbed transistor
 
+  #define SPINDLE_PWM_OFF_VALUE     0
 
 #endif
 

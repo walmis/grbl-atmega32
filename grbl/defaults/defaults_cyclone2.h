@@ -22,7 +22,7 @@
   #define DEFAULT_STEPPING_INVERT_MASK 0
   #define DEFAULT_DIRECTION_INVERT_MASK ((0<<X_AXIS)|(0<<Y_AXIS)|(1<<Z_AXIS))
   #define DEFAULT_STEPPER_IDLE_LOCK_TIME 255 // msec (0-254, 255 keeps steppers enabled)
-  #define DEFAULT_STATUS_REPORT_MASK ((BITFLAG_RT_STATUS_MACHINE_POSITION)|(BITFLAG_RT_STATUS_WORK_POSITION))
+  #define DEFAULT_STATUS_REPORT_MASK 1
   #define DEFAULT_JUNCTION_DEVIATION 0.02 // mm
   #define DEFAULT_ARC_TOLERANCE 0.002 // mm
   #define DEFAULT_REPORT_INCHES 0 // false
@@ -37,4 +37,10 @@
   #define DEFAULT_HOMING_SEEK_RATE 635.0 // mm/min (will saturate to MAX_RATE)
   #define DEFAULT_HOMING_DEBOUNCE_DELAY 250 // msec (0-65k)
   #define DEFAULT_HOMING_PULLOFF 0.0 // mm (distance that the axis move after homing)
+ 
+  #define DEFAULT_SPINDLE_RPM_MAX 10000.0 // rpm
+  #define DEFAULT_SPINDLE_RPM_MIN 0.0 // rpm
+  
+  #define DEFAULT_INVERT_PROBE_PIN 0
+  #define DEFAULT_LASER_MODE 0
 #endif
